@@ -39,10 +39,11 @@ def get_item_info(item_id):
             book_id = _get_book_id(media.id)
             # search for the right book
             # book = _find_book_by_id(book_id, books)
-            book = book_conn.get_book(book_id)
+            book = book_conn.get_book(_get_book_str_id(book_id))
             if book:
                 book_data = vars(book)
-                _add_data_to_media(media.id, book_data)
+                # _add_data_to_media(media.id, book_data)
+                _add_data_to_media(book_id, book_data)
                 return book_data
     return {}
 
@@ -77,6 +78,10 @@ def _order_books_list(books_list, data_list):
         if not uuid_b:
             _generate_book_id(book)
             _update_book_db(book)
+        # if uuid exists add existing book id? TODO
+        else:
+            book.id = uuid_b[0].uuid
+        # endchange TODO
         book_data = vars(book)
         _add_data_to_media(book.id, book_data)
         data_list.append(book_data)
@@ -145,10 +150,21 @@ def _generate_book_id(book):
 
 
 def _get_book_id(book_id):
-    uuid_map = repo.uuidMap.find_by(string_id=book_id)
+    # changes TODO
+    if (type(book_id) == int):
+        uuid_map = repo.uuidMap.find_by(uuid=book_id)
+    else: # endchange TODO
+        uuid_map = repo.uuidMap.find_by(string_id=book_id)
     if not uuid_map:
         raise Exception("book with id: {} not found in bravery-media db.".format(book_id))
     return uuid_map[0].uuid
+
+def _get_book_str_id(book_id):
+    uuid_map = repo.uuidMap.find_by(uuid=book_id)
+    if not uuid_map:
+        raise Exception("book with id: {} not found in bravery-media db.".format(book_id))
+    # return uuid_map[0].uuid
+    return uuid_map[0].string_id
 
 
 def _find_book_by_id(book_id, books):
