@@ -1,4 +1,5 @@
 from flask import Flask, request
+import requests
 from data_manager.Queries import *
 import json
 
@@ -10,6 +11,7 @@ app = Flask(__name__)
 def get_top_items():
     category = request.args.get("category")
     top_items = search_favorites(category)
+    print(top_items)
     return json.dumps(top_items)
 
 
@@ -41,3 +43,9 @@ def add_recommendation():
 
 if __name__ == '__main__':
     app.run(debug=True, port=5000)
+# get top items test
+    url = '127.0.0.1:5000/get_top_items'
+    params = {'category': 'movie'}
+    req = requests.get(url, params=params)
+    response = req.json()
+    print(response)

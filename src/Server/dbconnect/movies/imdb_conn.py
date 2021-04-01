@@ -46,6 +46,13 @@ def is_movie_relevant(movie):
     return False
 
 
-def dict_to_object(m):
-    return MovieResult(m['id'], m['title'], "Movie", "https://www.themoviedb.org/t/p/w1280" + m['poster_path'],
-                       m['overview'])
+def get_movie(movie_id):
+    url = config.get['get_movie_url'].format(movie_id, config.get['API_Key'])
+    request = requests.get(url=url, params=config.get['PARAMS'])
+    result = json.loads(json.dumps(request.json()))
+    return dict_to_object(result)
+
+
+def dict_to_object(movie):
+    return MovieResult(movie['id'], movie['title'], "Movie", "https://www.themoviedb.org/t/p/w1280" + movie['poster_path'],
+                       movie['overview'])
