@@ -1,5 +1,5 @@
 get = {
-    'google_api_key': "AIzaSyAEfzq99KQOFj_LLuo0SIojpg6ub8QniYw",
+    'google_api_key': "AIzaSyA8GTPVW5L5UYWgGoUKob64o97SxwOJ9aw",
     'book_search_url': "https://www.googleapis.com/books/v1/volumes?",
     'get_book_url': "https://www.googleapis.com/books/v1/volumes/{}?",
     'subjects': ["non", "History / Holocaust", "BIOGRAPHY & AUTOBIOGRAPHY", "FICTION",
