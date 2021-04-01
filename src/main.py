@@ -3,10 +3,10 @@ from Server.dbconnect.mysql_repository import repo
 
 if __name__ == '__main__':
     # run only once!!!!!!
-    repo.drop_tables()
+    # repo.drop_tables()
     #-------------------
 
-    repo.create_tables()
+    # repo.create_tables()
 
     # add data to db
     book1 = Queries.search_by_type("book", "shindler")
